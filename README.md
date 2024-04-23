@@ -1,41 +1,75 @@
-# Docker
+## Execução e Gerenciamento de Containers
 
-### Executa o container e inicia uma imagem interativa no container
+### Executar uma imagem interativa
 ```
-docker run -it <nome da imagem>
-```
-
-### Executar um comando dentro de um container e inicia uma imagem interativa no container
-```
-docker exec it <id do container>
+docker run -it <nome_da_imagem>
 ```
 
-### Deletar container
+### Executar um comando dentro de um container existente
 ```
-docker rm <nome do container>
+docker exec -it <id_do_container> <comando>
 ```
 
-### Mostrar quantos e quais containers estão sendo executados na sua máquina
+### Parar um container em execução
+```
+docker stop <nome_do_container ou id>
+```
+
+### Deletar um container
+```
+docker rm <nome_do_container ou id>
+```
+
+### Listar containers em execução
 ```
 docker ps
 ```
 
-### Mostrar todos os containers que já foram executas na sua máquina
+### Listar todos os containers
 ```
 docker ps -a
 ```
 
-### Exibe informações de uso de CPU, memória e rede.
+### Exibir informações de uso de recursos
 ```
 docker stats
 ```
 
-### Executar uma imagem de teste para testar o funcionamento do Docker
+## Gerenciamento de Imagens e Redes
+
+### Construir uma imagem a partir de um Dockerfile
+```
+docker build -t <nome_da_imagem> .
+```
+
+### Criar uma rede
+```
+docker network create <nome_da_rede>
+```
+
+### Conectar um container a uma rede existente
+```
+docker network connect <nome_da_rede> <nome_do_container>
+```
+
+### Inspecionar uma rede
+```
+docker network inspect <nome_da_rede>
+```
+
+## Exemplos
+
+### Executar uma imagem de teste
 ```
 docker run hello-world
 ```
 
-### Parar todos os processos que estão executando em um container
+### Criar um container MySQL
 ```
-docker stop <id do container>
+docker run -p 3307:3306 --name mysqldb -e MYSQL_ROOT_PASSWORD=14725836 -e MYSQL_DATABASE=bank mysql:latest
+```
+
+### Criar um container customizado para uma aplicação
+```
+docker run -p 9090:9090 --name bank --net bank-net -e MYSQL_HOST=mysqldb -e MYSQL_DATABASE=bank -e MYSQL_USER=root -e MYSQL_ROOT_PASSWORD=14725836 bank
 ```
